@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CombatScript : MonoBehaviour
 {
+    // Projectile attack
     public GameObject projectile;
     public Transform aimCamera;
     public Transform spawner;
@@ -11,9 +12,21 @@ public class CombatScript : MonoBehaviour
     public float projectileDamage;
     public float shootDelay;
     private float shootDelayTimer;
-    
+
+    // Melee attack
+    public bool canSlay;
+
+    Animator animator;
+
+    private void Start()
+    {
+        canSlay = true;
+        animator = GetComponent<Animator>();
+    }
+
     void Update()
     {
+        animator.ResetTrigger("Attack");
         if (Input.GetButton("Shoot"))
         {
             if (shootDelayTimer < 0)
@@ -24,6 +37,13 @@ public class CombatScript : MonoBehaviour
                 shootDelayTimer = shootDelay;
             }
             shootDelayTimer -= Time.deltaTime;
+        }
+        if (Input.GetButtonDown("Slay"))
+        {
+            if (canSlay)
+            {
+                animator.SetTrigger("Attack");
+            }
         }
     }
 }

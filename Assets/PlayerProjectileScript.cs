@@ -12,7 +12,7 @@ public class PlayerProjectileScript : MonoBehaviour
     {
         if (collision.gameObject.tag == "Enemy")
         {
-            
+            collision.gameObject.GetComponent<EnemyStateScript>().Damage(damage);
         }
         Destroy(gameObject);
     }
@@ -21,6 +21,7 @@ public class PlayerProjectileScript : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         rb.AddRelativeForce(Vector3.forward * baseSpeed, ForceMode.Impulse);
+        Destroy(gameObject, 5f);
     }
 
     void Update()

@@ -23,6 +23,7 @@ public class PlayerMovementScript : MonoBehaviour
 
     Animator animator;
     public Transform playerModel;
+    public Transform playerHead;
 
     // Other private
     private CharacterController charControl;
