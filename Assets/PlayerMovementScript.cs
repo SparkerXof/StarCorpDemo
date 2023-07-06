@@ -28,6 +28,7 @@ public class PlayerMovementScript : MonoBehaviour
     // Other private
     private CharacterController charControl;
     private float vertical;
+    private bool isDead = false;
 
     void Awake()
     {
@@ -41,12 +42,16 @@ public class PlayerMovementScript : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
-    void Update()
+    public void TurnDead()
     {
+        isDead = true;
+    }
 
+    void Movement()
+    {
         // Horizontal movement vector
         Vector3 direction;
-        
+
         float movementX;
         float movementZ;
 
@@ -60,16 +65,16 @@ public class PlayerMovementScript : MonoBehaviour
             // Jumping from ground
             if (Input.GetButtonDown("Jump"))
             {
-                if (charControl.isGrounded) 
-                { 
-                    vertical = jumpStregth; 
+                if (charControl.isGrounded)
+                {
+                    vertical = jumpStregth;
                 }
                 // Switch to fly mode
                 else if (!charControl.isGrounded && vertical > 0)
                 {
                     flyMode = true;
                 }
-            } 
+            }
             else
             {
                 if (!charControl.isGrounded)
@@ -80,8 +85,8 @@ public class PlayerMovementScript : MonoBehaviour
             animator.SetBool("onGround", charControl.isGrounded);
             animator.SetFloat("Vertical", vertical);
 
-            direction = new Vector3 (movementX, 0, movementZ).normalized;
-            if (direction.magnitude > 0.1f) 
+            direction = new Vector3(movementX, 0, movementZ).normalized;
+            if (direction.magnitude > 0.1f)
             {
                 float angle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + viewCamera.eulerAngles.y;
                 float smoothAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, angle, ref turnSmoothVelocity, turnSmoothTime);
@@ -90,14 +95,15 @@ public class PlayerMovementScript : MonoBehaviour
                 Vector3 moveDirection = Quaternion.Euler(0, angle, 0) * Vector3.forward;
                 charControl.Move(moveDirection.normalized * walkSpeed * Time.deltaTime);
                 animator.SetBool("isWalking", true);
-            } else
+            }
+            else
             {
                 animator.SetBool("isWalking", false);
             }
             //bool isShooting = Input.GetButton("Shoot");
             //float modelAngle = Mathf.SmoothDampAngle(playerModel.eulerAngles.y, viewCamera.eulerAngles.y, ref turnSmoothVelocity, turnSmoothTime);
             charControl.Move(new Vector3(0, vertical * Time.deltaTime, 0));
-        } 
+        }
         // Fly mode
         else
         {
@@ -113,7 +119,8 @@ public class PlayerMovementScript : MonoBehaviour
                 if (jumpTimer < 0)
                 {
                     jumpTimer = jumpTimerDelay;
-                } else
+                }
+                else
                 {
                     flyMode = false;
                     vertical = -0f;
@@ -143,5 +150,10 @@ public class PlayerMovementScript : MonoBehaviour
         animator.SetBool("isShooting", isShooting);
 
         animator.SetBool("FlyMode", flyMode);
+    }
+
+    void Update()
+    {
+        if (!isDead) { Movement(); }
     }
 }

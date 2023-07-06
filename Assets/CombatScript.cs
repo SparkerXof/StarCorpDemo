@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class CombatScript : MonoBehaviour
 {
+    // Health
+    public int health;
+    public bool isDead = false;
+
     // Projectile attack
     public GameObject projectile;
     public Transform aimCamera;
@@ -24,25 +28,44 @@ public class CombatScript : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
+    void Death()
+    {
+        isDead = true;
+        GetComponent<PlayerMovementScript>().TurnDead();
+    }
+
+    public void Damage()
+    {
+        health -= 1;
+        if (health < 0)
+        {
+            Death();
+        }
+    }
+
     void Update()
     {
-        animator.ResetTrigger("Attack");
-        if (Input.GetButton("Shoot"))
+        if (!isDead)
         {
-            if (shootDelayTimer < 0)
+            animator.ResetTrigger("Attack");
+            if (Input.GetButton("Shoot"))
             {
-                projectile.GetComponent<PlayerProjectileScript>().baseSpeed = projectileSpeed;
-                projectile.GetComponent<PlayerProjectileScript>().damage = projectileDamage;
-                Instantiate(projectile, spawner.position, aimCamera.rotation);
-                shootDelayTimer = shootDelay;
+                if (shootDelayTimer < 0)
+                {
+                    projectile.GetComponent<PlayerProjectileScript>().baseSpeed = projectileSpeed;
+                    projectile.GetComponent<PlayerProjectileScript>().damage = projectileDamage;
+                    Instantiate(projectile, spawner.position, aimCamera.rotation);
+                    spawner.GetComponent<AudioSource>().Play();
+                    shootDelayTimer = shootDelay;
+                }
+                shootDelayTimer -= Time.deltaTime;
             }
-            shootDelayTimer -= Time.deltaTime;
-        }
-        if (Input.GetButtonDown("Slay"))
-        {
-            if (canSlay)
+            if (Input.GetButtonDown("Slay"))
             {
-                animator.SetTrigger("Attack");
+                if (canSlay)
+                {
+                    animator.SetTrigger("Attack");
+                }
             }
         }
     }

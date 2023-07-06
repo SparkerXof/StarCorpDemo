@@ -2,17 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerProjectileScript : MonoBehaviour
+public class EnemyProjectileScript : MonoBehaviour
 {
     public float baseSpeed;
-    public float damage;
     private Rigidbody rb;
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Enemy")
+        if (collision.gameObject.tag == "Player")
         {
-            collision.gameObject.GetComponent<EnemyStateScript>().Damage(damage);
+            collision.gameObject.GetComponent<CombatScript>().Damage();
         }
         Destroy(gameObject);
     }

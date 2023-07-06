@@ -15,9 +15,9 @@ GameObject:
   - component: {fileID: 2032600885522536666}
   - component: {fileID: 64804556289670805}
   - component: {fileID: 105473621813047028}
-  - component: {fileID: 1510141331438027743}
+  - component: {fileID: 3576648707530771551}
   m_Layer: 3
-  m_Name: PlayerProjectile
+  m_Name: EnemyProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -66,7 +66,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 613bbdcde30a63c40babe1a04bd7a6b2, type: 2}
+  - {fileID: 2100000, guid: 03138527530306d4597b3e2c7f42119b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -209,8 +209,8 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 0.9160186, b: 0, a: 1}
-      key1: {r: 1, g: 0.93979645, b: 0, a: 1}
+      key0: {r: 1, g: 0, b: 0, a: 1}
+      key1: {r: 1, g: 0, b: 0, a: 0.5882353}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -260,7 +260,7 @@ Light:
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0
-  m_Color: {r: 1, g: 0.96862745, b: 0.18431373, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_Intensity: 3
   m_Range: 3
   m_SpotAngle: 30
@@ -311,7 +311,7 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!114 &1510141331438027743
+--- !u!114 &3576648707530771551
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -320,8 +320,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4910831048789334789}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fcce3e76f906444ba6aa6b0091925bf, type: 3}
+  m_Script: {fileID: 11500000, guid: 9aee3ac3f46ce5e49abdf148cb15898f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   baseSpeed: 40
-  damage: 5
