@@ -5,7 +5,6 @@ using UnityEngine;
 public class EnemyStateScript : MonoBehaviour
 {
     public float health;
-    public float baseDamage;
 
     public void Damage(float dmg)
     {
@@ -16,15 +15,5 @@ public class EnemyStateScript : MonoBehaviour
     void Death()
     {
         Destroy(gameObject);
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        /*
-        if (other.gameObject.tag == "PlayerSword" && other.GetComponent<SwordScript>().getRes)
-        {
-            Damage(other.GetComponent<SwordScript>().resultDamage);
-        }
-        */
     }
 }

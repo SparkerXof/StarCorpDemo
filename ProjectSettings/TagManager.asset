@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Enemy
   - PlayerSword
+  - GameManager
   layers:
   - Default
   - TransparentFX
@@ -13,7 +14,7 @@ TagManager:
   - Projectile
   - Water
   - UI
-  - 
+  - DoorTrigger
   - 
   - 
   - 

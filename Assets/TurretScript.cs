@@ -13,12 +13,12 @@ public class TurretScript : MonoBehaviour
     public float shootDelay;
     private float shootDelayTimer;
 
-    AudioSource audio;
+    AudioSource tirretAudio;
 
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        audio = GetComponent<AudioSource>();
+        tirretAudio = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -32,7 +32,7 @@ public class TurretScript : MonoBehaviour
                 {
                     projectile.GetComponent<EnemyProjectileScript>().baseSpeed = projectileSpeed;
                     Instantiate(projectile, bulletSpawner.position, rotatingPart.rotation);
-                    audio.Play();
+                    tirretAudio.Play();
                     shootDelayTimer = shootDelay;
                 }
                 shootDelayTimer -= Time.deltaTime;

@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
-using UnityEditor.SearchService;
 using UnityEngine;
 
 public class PlayerMovementScript : MonoBehaviour
@@ -37,7 +36,6 @@ public class PlayerMovementScript : MonoBehaviour
 
     void Start()
     {
-        Cursor.visible = false;
         charControl = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
     }
@@ -45,6 +43,7 @@ public class PlayerMovementScript : MonoBehaviour
     public void TurnDead()
     {
         isDead = true;
+        flyMode = false;
     }
 
     void Movement()
@@ -100,8 +99,6 @@ public class PlayerMovementScript : MonoBehaviour
             {
                 animator.SetBool("isWalking", false);
             }
-            //bool isShooting = Input.GetButton("Shoot");
-            //float modelAngle = Mathf.SmoothDampAngle(playerModel.eulerAngles.y, viewCamera.eulerAngles.y, ref turnSmoothVelocity, turnSmoothTime);
             charControl.Move(new Vector3(0, vertical * Time.deltaTime, 0));
         }
         // Fly mode

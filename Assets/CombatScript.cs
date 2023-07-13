@@ -12,13 +12,18 @@ public class CombatScript : MonoBehaviour
     public GameObject projectile;
     public Transform aimCamera;
     public Transform spawner;
+    public AudioSource swordAudio;
     public float projectileSpeed;
     public float projectileDamage;
     public float shootDelay;
     private float shootDelayTimer;
+    public float damageDelay;
+    private float damageDelayTimer;
 
     // Melee attack
     public bool canSlay;
+
+    public GameObject shield;
 
     Animator animator;
 
@@ -26,20 +31,32 @@ public class CombatScript : MonoBehaviour
     {
         canSlay = true;
         animator = GetComponent<Animator>();
+        FindAnyObjectByType<MainGameManager>().UpdateUI();
     }
 
     void Death()
     {
         isDead = true;
+        FindAnyObjectByType<MainGameManager>().UpdateLabel("You lose!\nTry again");
         GetComponent<PlayerMovementScript>().TurnDead();
+        animator.SetTrigger("Death");
     }
 
     public void Damage()
     {
-        health -= 1;
-        if (health < 0)
+        if (damageDelayTimer < 0)
         {
-            Death();
+            health -= 1;
+            if (health < 0)
+            {
+                Death();
+            } 
+            else
+            {
+                FindAnyObjectByType<MainGameManager>().UpdateUI();
+                damageDelayTimer = damageDelay;
+                shield.SetActive(true);
+            }
         }
     }
 
@@ -65,8 +82,14 @@ public class CombatScript : MonoBehaviour
                 if (canSlay)
                 {
                     animator.SetTrigger("Attack");
+                    swordAudio.Play();
                 }
             }
+        }
+        damageDelayTimer -= Time.deltaTime;
+        if (damageDelayTimer < 0)
+        {
+            shield.SetActive(false);
         }
     }
 }
