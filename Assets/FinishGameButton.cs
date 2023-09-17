@@ -34,7 +34,7 @@ public class FinishGameButton : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetButtonDown("Action"))
+        if (Input.GetButtonDown("Action") && hint.activeSelf)
         {
             audio.Play();
             hint.SetActive(false);
@@ -48,6 +48,8 @@ public class FinishGameButton : MonoBehaviour
         }
         if (endTime < 0)
         {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
             SceneManager.LoadScene(0);
         }
     }

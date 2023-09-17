@@ -33,7 +33,7 @@ public class DoorButtonScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Action"))
+        if (Input.GetButtonDown("Action") && hint.activeSelf)
         {
             audio.Play();
             door.Action();
